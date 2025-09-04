@@ -1,0 +1,12 @@
+.app-footer {
+  background: #1ca3de;   /* blue background */
+  text-align: center;
+  padding: 15px;
+  border-top: 1px solid #ddd;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  color: white;  /* text iwe nyeupe ionekane vizuri */
+  font-size: 14px;
+}
