@@ -115,7 +115,12 @@
 import React, { useState } from "react";
 import "./SubmitResearch.css";
 
-const SubmitResearch = ({ availableProposals, setAvailableProposals, myResearches, setMyResearches }) => {
+const SubmitResearch = ({
+  availableProposals = [],
+  setAvailableProposals = () => {},
+  myResearches = [],
+  setMyResearches = () => {},
+}) => {
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({ title: "", type: "", pdf: null });
   const [confirmation, setConfirmation] = useState("");
@@ -144,6 +149,7 @@ const SubmitResearch = ({ availableProposals, setAvailableProposals, myResearche
       pdf: formData.pdf,
       startDate: new Date().toLocaleDateString(),
     };
+
     // moja kwa moja inakwenda MyResearches
     setMyResearches([...myResearches, newProposal]);
 
@@ -196,7 +202,9 @@ const SubmitResearch = ({ availableProposals, setAvailableProposals, myResearche
               <td>{prop.status}</td>
               <td>{prop.lastModified || "-"}</td>
               <td>
-                <button onClick={() => handleSubmitAvailable(index)}>Submit</button>
+                <button onClick={() => handleSubmitAvailable(index)}>
+                  Submit
+                </button>
               </td>
             </tr>
           ))}
@@ -214,15 +222,32 @@ const SubmitResearch = ({ availableProposals, setAvailableProposals, myResearche
       )}
 
       {showForm && (
-        <form onSubmit={handleSubmit} style={{ marginTop: "20px", border: "1px solid #ccc", padding: "20px", borderRadius: "10px" }}>
+        <form
+          onSubmit={handleSubmit}
+          style={{
+            marginTop: "20px",
+            border: "1px solid #ccc",
+            padding: "20px",
+            borderRadius: "10px",
+          }}
+        >
           <h3>Submit New Proposal</h3>
           <div style={{ marginBottom: "10px" }}>
             <label>Title: </label>
-            <input type="text" name="title" value={formData.title} onChange={handleInputChange} />
+            <input
+              type="text"
+              name="title"
+              value={formData.title}
+              onChange={handleInputChange}
+            />
           </div>
           <div style={{ marginBottom: "10px" }}>
             <label>Type: </label>
-            <select name="type" value={formData.type} onChange={handleInputChange}>
+            <select
+              name="type"
+              value={formData.type}
+              onChange={handleInputChange}
+            >
               <option value="">Select type</option>
               <option value="Thesis">Thesis</option>
               <option value="Article">Article</option>
@@ -231,7 +256,12 @@ const SubmitResearch = ({ availableProposals, setAvailableProposals, myResearche
           </div>
           <div style={{ marginBottom: "10px" }}>
             <label>Attach PDF: </label>
-            <input type="file" name="pdf" accept="application/pdf" onChange={handleInputChange} />
+            <input
+              type="file"
+              name="pdf"
+              accept="application/pdf"
+              onChange={handleInputChange}
+            />
           </div>
           <button type="submit">Submit Proposal</button>
         </form>

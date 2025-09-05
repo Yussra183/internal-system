@@ -36,23 +36,31 @@
 
 // export default App;
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { useState } from "react";
+
 import MainLayout from "./components/MainLayout";
 import Login from "./pages/auth/Login";
 import Dashboard from "./pages/researcher/Dashboard";
 import SubmitResearch from "./pages/researcher/SubmitResearch";
 import MyResearches from "./pages/researcher/MyResearches";
 import Notifications from "./pages/researcher/Notifications";
-import { useState } from "react";
 
 function App() {
   const [user, setUser] = useState(null);
 
-  const handleLogin = (username) => {
-    setUser({ username });
-  };
+  // State for researcher data
+  const [availableProposals, setAvailableProposals] = useState([]);
+  const [myResearches, setMyResearches] = useState([]);
+  const [notifications, setNotifications] = useState([]);
 
-  const handleLogout = () => {
-    setUser(null);
+  const handleLogin = (username) => setUser({ username });
+  const handleLogout = () => setUser(null);
+
+  // Function to update a research in MyResearches
+  const updateProposal = (index, updated) => {
+    const updatedList = [...myResearches];
+    updatedList[index] = { ...updatedList[index], ...updated, lastModified: new Date().toLocaleString() };
+    setMyResearches(updatedList);
   };
 
   return (
@@ -66,9 +74,33 @@ function App() {
           <Route path="/" element={<MainLayout username={user.username} onLogout={handleLogout} />}>
             <Route index element={<Dashboard />} />
             <Route path="dashboard" element={<Dashboard />} />
-            <Route path="submit-research" element={<SubmitResearch />} />
-            <Route path="my-researches" element={<MyResearches />} />
-            <Route path="notifications" element={<Notifications />} />
+
+            <Route 
+              path="submit-research" 
+              element={
+                <SubmitResearch 
+                  availableProposals={availableProposals} 
+                  setAvailableProposals={setAvailableProposals} 
+                  myResearches={myResearches} 
+                  setMyResearches={setMyResearches} 
+                />
+              } 
+            />
+
+            <Route 
+              path="my-researches" 
+              element={
+                <MyResearches 
+                  myProposals={myResearches} 
+                  updateProposal={updateProposal} 
+                />
+              } 
+            />
+
+            <Route 
+              path="notifications" 
+              element={<Notifications notifications={notifications} />} 
+            />
           </Route>
         )}
 
