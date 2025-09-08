@@ -5,11 +5,11 @@ import "./DivisionSidebar.css";
 
 const DivisionSidebar = () => {
   const menuItems = [
-    { name: "Dashboard", icon: "📊", path: "/division/dashboard" },
-    { name: "Assign Researcher", icon: "🧑‍💻", path: "/division/assign-researcher" },
-    { name: "Review Research", icon: "🔎", path: "/division/review-research" },
-    { name: "Reports", icon: "📑", path: "/division/reports" },
-  ];
+  { name: "Dashboard", icon: "📊", path: "/head/dashboard" },
+  { name: "Assign Researcher", icon: "🧑‍💻", path: "/head/assign-researcher" },
+  { name: "Review Research", icon: "🔎", path: "/head/review-research" },
+  { name: "Reports", icon: "📑", path: "/head/reports" },
+];
 
   return (
     <aside className="sidebar">
