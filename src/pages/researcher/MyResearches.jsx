@@ -35,9 +35,11 @@
 // };
 
 // export default MyResearches;
+
 import React, { useState } from "react";
-import { useNavigate ,useLocation   } from "react-router-dom";
-const MyResearches = ({ myProposals, updateProposal }) => {
+import { useNavigate, useLocation } from "react-router-dom";
+
+const MyResearches = ({ myProposals = [], updateProposal = () => {} }) => {
   const [editIndex, setEditIndex] = useState(null);
   const [formData, setFormData] = useState({ title: "", type: "", pdf: null, finalPdf: null });
 
@@ -62,7 +64,9 @@ const MyResearches = ({ myProposals, updateProposal }) => {
   return (
     <div>
       <h2>My Researches</h2>
-      {myProposals.length === 0 ? <p>No research submitted yet.</p> :
+      {myProposals.length === 0 ? (
+        <p>No research submitted yet.</p>
+      ) : (
         <table style={{ width: "100%", borderCollapse: "collapse" }}>
           <thead>
             <tr style={{ background: "#1ca3de", color: "white" }}>
@@ -89,11 +93,12 @@ const MyResearches = ({ myProposals, updateProposal }) => {
             ))}
           </tbody>
         </table>
-      }
+      )}
+
       {editIndex !== null && (
         <form onSubmit={handleSave} style={{ marginTop: "10px", border: "1px solid #ccc", padding: "10px" }}>
           <h4>Edit Proposal / Add Final Report</h4>
-          <input type="text" name="title" value={formData.title} onChange={handleChange} />
+          <input type="text" name="title" value={formData.title} onChange={handleChange} placeholder="Title" />
           <select name="type" value={formData.type} onChange={handleChange}>
             <option value="">Select Type</option>
             <option value="Utafiti wa uvuvi">Utafiti wa uvuvi</option>

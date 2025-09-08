@@ -35,80 +35,103 @@
 // }
 
 // export default App;
+
+import React, { useContext, useState, lazy, Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { useState } from "react";
+import { AuthProvider, AuthContext } from "./context/AuthContext";
 
 import MainLayout from "./components/MainLayout";
+import HeadLayout from "./components/HeadLayout";
 import Login from "./pages/auth/Login";
-import Dashboard from "./pages/researcher/Dashboard";
-import SubmitResearch from "./pages/researcher/SubmitResearch";
-import MyResearches from "./pages/researcher/MyResearches";
-import Notifications from "./pages/researcher/Notifications";
 
-function App() {
-  const [user, setUser] = useState(null);
+// Lazy load pages
+const Dashboard = lazy(() => import("./pages/researcher/Dashboard"));
+const SubmitResearch = lazy(() => import("./pages/researcher/SubmitResearch"));
+const MyResearches = lazy(() => import("./pages/researcher/MyResearches"));
+const Notifications = lazy(() => import("./pages/researcher/Notifications"));
 
-  // State for researcher data
-  const [availableProposals, setAvailableProposals] = useState([]);
+const HeadDashboard = lazy(() => import("./pages/division/Dashboard"));
+const AssignResearcher = lazy(() => import("./pages/division/AssignResearcher"));
+const Reports = lazy(() => import("./pages/division/Reports"));
+
+function AppRoutes() {
+  const { user } = useContext(AuthContext);
+
+  // Shared state for researcher
   const [myResearches, setMyResearches] = useState([]);
-  const [notifications, setNotifications] = useState([]);
+  const [availableProposals, setAvailableProposals] = useState([
+    { title: "Proposal A", type: "Thesis", status: "Pending" },
+    { title: "Proposal B", type: "Article", status: "Pending" },
+  ]);
 
-  const handleLogin = (username) => setUser({ username });
-  const handleLogout = () => setUser(null);
-
-  // Function to update a research in MyResearches
-  const updateProposal = (index, updated) => {
-    const updatedList = [...myResearches];
-    updatedList[index] = { ...updatedList[index], ...updated, lastModified: new Date().toLocaleString() };
-    setMyResearches(updatedList);
+  const getHomeRoute = () => {
+    if (!user) return "/login";
+    if (user.role === "researcher") return "/dashboard";
+    if (user.role === "headOfDivision") return "/head/dashboard";
+    return "/login";
   };
 
   return (
-    <Router>
+    <Suspense fallback={<div>Loading...</div>}>
       <Routes>
-        {/* Login Route */}
-        {!user && <Route path="/login" element={<Login onLogin={handleLogin} />} />}
+        {!user && <Route path="/login" element={<Login />} />}
 
-        {/* Protected Routes */}
-        {user && (
-          <Route path="/" element={<MainLayout username={user.username} onLogout={handleLogout} />}>
+        {user?.role === "researcher" && (
+          <Route path="/" element={<MainLayout />}>
             <Route index element={<Dashboard />} />
             <Route path="dashboard" element={<Dashboard />} />
-
-            <Route 
-              path="submit-research" 
+            <Route
+              path="submit-research"
               element={
-                <SubmitResearch 
-                  availableProposals={availableProposals} 
-                  setAvailableProposals={setAvailableProposals} 
-                  myResearches={myResearches} 
-                  setMyResearches={setMyResearches} 
+                <SubmitResearch
+                  myResearches={myResearches}
+                  setMyResearches={setMyResearches}
+                  availableProposals={availableProposals}
+                  setAvailableProposals={setAvailableProposals}
                 />
-              } 
+              }
             />
-
-            <Route 
-              path="my-researches" 
+            <Route
+              path="my-researches"
               element={
-                <MyResearches 
-                  myProposals={myResearches} 
-                  updateProposal={updateProposal} 
+                <MyResearches
+                  myProposals={myResearches}
+                  updateProposal={(index, updated) => {
+                    const copy = [...myResearches];
+                    copy[index] = updated;
+                    setMyResearches(copy);
+                  }}
                 />
-              } 
+              }
             />
-
-            <Route 
-              path="notifications" 
-              element={<Notifications notifications={notifications} />} 
-            />
+            <Route path="notifications" element={<Notifications />} />
           </Route>
         )}
 
-        {/* Redirect unknown routes */}
-        <Route path="*" element={<Navigate to={user ? "/" : "/login"} />} />
+        {user?.role === "headOfDivision" && (
+          <Route path="/head" element={<HeadLayout />}>
+            <Route index element={<HeadDashboard />} />
+            <Route path="dashboard" element={<HeadDashboard />} />
+            <Route path="assign-researcher" element={<AssignResearcher />} />
+            <Route path="reports" element={<Reports />} />
+          </Route>
+        )}
+
+        <Route path="*" element={<Navigate to={getHomeRoute()} />} />
       </Routes>
-    </Router>
+    </Suspense>
+  );
+}
+
+function App() {
+  return (
+    <AuthProvider>
+      <Router>
+        <AppRoutes />
+      </Router>
+    </AuthProvider>
   );
 }
 
 export default App;
+

@@ -46,21 +46,30 @@
 // };
 
 // export default Login;
-import React, { useState } from "react";
+
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import Logo from "../../assets/zafiri.png";
 import "./login.css";
+import { AuthContext } from "../../context/AuthContext";
 
-const Login = ({ onLogin }) => {
+const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(""); // 👈 new
+  const { login } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // kwa sasa tuna simple login tu
-    if (username && password) {
-      onLogin(username); // tuma username kwa App.jsx
+    const res = login({ username, password });
+
+    if (res.ok) {
+      // redirect based on role
+      if (res.user.role === "researcher") navigate("/dashboard");
+      else if (res.user.role === "headOfDivision") navigate("/head/dashboard");
     } else {
-      alert("Tafadhali jaza username na password");
+      setError(res.message); // show error inline instead of alert
     }
   };
 
@@ -72,6 +81,7 @@ const Login = ({ onLogin }) => {
           <p className="portal-text">Research Portal</p>
         </div>
         <h2>Login</h2>
+        {error && <p style={{ color: "red", marginBottom: "10px" }}>{error}</p>}
         <input
           type="text"
           placeholder="Username"
@@ -85,9 +95,17 @@ const Login = ({ onLogin }) => {
           onChange={(e) => setPassword(e.target.value)}
         />
         <button type="submit">Login</button>
+        <p style={{ fontSize: "12px", marginTop: "10px" }}>
+          Demo users: <br />
+          researcher / 123 <br />
+          divisionhead / 123
+        </p>
       </form>
     </div>
   );
 };
 
 export default Login;
+
+
+
