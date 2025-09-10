@@ -1,0 +1,99 @@
+.manage-proposals-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.proposals-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.proposals-table th,
+.proposals-table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+
+.proposals-table th {
+  background: #f1f1f1;
+}
+
+.final-report-row {
+  background: #dbe9ff; /* light blue for final report */
+}
+
+.pdf-btn {
+  padding: 5px 10px;
+  background: #1ca3de;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pdf-btn:hover {
+  background: #0d6efd;
+}
+
+.action-btn {
+  padding: 5px 10px;
+  margin-right: 5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: white;
+}
+
+.action-btn.reject {
+  background: #ff4d4d;
+}
+
+.action-btn.clear {
+  background: green;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right:0;
+  bottom:0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+}
+
+.modal textarea {
+  width: 100%;
+  height: 80px;
+  margin: 10px 0;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.submit-btn {
+  background: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
