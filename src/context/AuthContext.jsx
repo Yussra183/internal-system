@@ -1,60 +1,3 @@
-
-// import React, { createContext, useState, useEffect } from "react";
-
-// // Create context
-// export const AuthContext = createContext();
-
-// // Provider component
-// export const AuthProvider = ({ children }) => {
-//   // State ya current user
-//   const [user, setUser] = useState(() => {
-//     const saved = localStorage.getItem("rms_user");
-//     return saved ? JSON.parse(saved) : null;
-//   });
-
-//   // Login function
-//   const login = ({ username, password }) => {
-//     let u = null;
-
-//     // Demo users
-//     if (username === "researcher" && password === "123") {
-//       u = { username, role: "researcher" };
-//     } else if (username === "divisionhead" && password === "123") {
-//       u = { username, role: "headOfDivision" };
-//     }
-
-//     if (u) {
-//       setUser(u);
-//       localStorage.setItem("rms_user", JSON.stringify(u));
-//       return { ok: true, user: u };
-//     }
-
-//     return { ok: false, message: "Invalid credentials" };
-//   };
-
-//   // Logout function
-//   const logout = () => {
-//     setUser(null);
-//     localStorage.removeItem("rms_user");
-//   };
-
-//   // Sync kati ya tabs
-//   useEffect(() => {
-//     const handler = () => {
-//       const saved = localStorage.getItem("rms_user");
-//       setUser(saved ? JSON.parse(saved) : null);
-//     };
-//     window.addEventListener("storage", handler);
-//     return () => window.removeEventListener("storage", handler);
-//   }, []);
-
-//   return (
-//     <AuthContext.Provider value={{ user, login, logout }}>
-//       {children}
-//     </AuthContext.Provider>
-//   );
-// };
-
 import React, { createContext, useState, useEffect } from "react";
 
 // Create context
@@ -75,6 +18,7 @@ export const AuthProvider = ({ children }) => {
     const users = [
       { username: "researcher", password: "123", role: "researcher" },
       { username: "divisionhead", password: "123", role: "headOfDivision" },
+      { username: "headofdepartment", password: "123", role: "headOfDepartment" }, // new HOD user
     ];
 
     const found = users.find(
@@ -154,4 +98,3 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
-

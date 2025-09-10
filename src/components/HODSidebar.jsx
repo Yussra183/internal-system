@@ -1,14 +1,13 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import Logo from "../assets/zafiri.png";
-import "./Sidebar.css";
+import "./Sidebar.css"; // tumetumia ile ile CSS ya sidebar
 
-const Sidebar = () => {
+const HODSidebar = () => {
   const menuItems = [
-    { name: "Dashboard", icon: "🏠", path: "/dashboard" },
-    { name: "Submit Research", icon: "📝", path: "/submit-research" },
-    { name: "My Researches", icon: "📂", path: "/my-researches" },
-    { name: "Notifications", icon: "🔔", path: "/notifications" },
+    { name: "Dashboard", icon: "🏠", path: "/hod/dashboard" },
+    { name: "Manage Proposals", icon: "📝", path: "/hod/manage-proposals" },
+    { name: "Profile", icon: "👤", path: "/hod/profile" },
   ];
 
   return (
@@ -34,4 +33,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default HODSidebar;
