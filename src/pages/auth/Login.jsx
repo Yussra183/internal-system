@@ -56,20 +56,25 @@ import { AuthContext } from "../../context/AuthContext";
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(""); // 👈 new
+  const [error, setError] = useState("");
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const res = login({ username, password });
+
+    // Trim and lowercase username for robust matching
+    const res = login({
+      username: username.trim().toLowerCase(),
+      password: password,
+    });
 
     if (res.ok) {
-      // redirect based on role
+      // Redirect based on role
       if (res.user.role === "researcher") navigate("/dashboard");
       else if (res.user.role === "headOfDivision") navigate("/head/dashboard");
     } else {
-      setError(res.message); // show error inline instead of alert
+      setError(res.message);
     }
   };
 
@@ -81,7 +86,9 @@ const Login = () => {
           <p className="portal-text">Research Portal</p>
         </div>
         <h2>Login</h2>
+
         {error && <p style={{ color: "red", marginBottom: "10px" }}>{error}</p>}
+
         <input
           type="text"
           placeholder="Username"
@@ -95,6 +102,7 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
         <button type="submit">Login</button>
+
         <p style={{ fontSize: "12px", marginTop: "10px" }}>
           Demo users: <br />
           researcher / 123 <br />
@@ -106,6 +114,7 @@ const Login = () => {
 };
 
 export default Login;
+
 
 
 

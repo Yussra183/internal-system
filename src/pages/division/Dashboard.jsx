@@ -24,6 +24,7 @@
 
 // export default DivisionDashboard;
 
+
 import React, { useContext, useState } from "react";
 import "./DivisionDashboard.css";
 import { AuthContext } from "../../context/AuthContext";
@@ -31,14 +32,17 @@ import { AuthContext } from "../../context/AuthContext";
 const DivisionDashboard = () => {
   const { proposals, addProposal } = useContext(AuthContext);
   const [showForm, setShowForm] = useState(false);
-  const [newProposal, setNewProposal] = useState({ title: "", type: "" });
+  const [newProposal, setNewProposal] = useState({ title: "", type: "", description: "" });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addProposal(newProposal);
-    setNewProposal({ title: "", type: "" });
+    const proposalWithTime = {
+      ...newProposal,
+      submittedAt: new Date().toLocaleString(),
+    };
+    addProposal(proposalWithTime);
+    setNewProposal({ title: "", type: "", description: "" });
     setShowForm(false);
-    alert("Proposal sent to researcher notifications!");
   };
 
   return (
@@ -53,10 +57,14 @@ const DivisionDashboard = () => {
         <div className="card"><h3>Total Proposals Conducted</h3><p>5</p></div>
       </div>
 
+      {/* Toggle Form Button */}
       <div className="add-proposal-btn">
-        <button onClick={() => setShowForm(true)}>+ Add New Proposal</button>
+        <button onClick={() => setShowForm(!showForm)}>
+          {showForm ? "Close Proposal Form" : "+ Add New Proposal"}
+        </button>
       </div>
 
+      {/* Proposal Form */}
       {showForm && (
         <form className="proposal-form" onSubmit={handleSubmit}>
           <label>Proposal Title</label>
@@ -75,13 +83,46 @@ const DivisionDashboard = () => {
             required
           />
 
+          <label>Proposal Description</label>
+          <textarea
+            value={newProposal.description}
+            onChange={(e) => setNewProposal({ ...newProposal, description: e.target.value })}
+          ></textarea>
+
           <button type="submit">Submit Proposal</button>
         </form>
+      )}
+
+      {/* Table of proposals */}
+      {proposals.length > 0 && (
+        <div className="proposals-table">
+          <h3>All Proposals</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Type</th>
+                <th>Submitted At</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {proposals.map((p, index) => (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  <td>{p.title}</td>
+                  <td>{p.type}</td>
+                  <td>{p.submittedAt}</td>
+                  <td>{p.status}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );
 };
 
 export default DivisionDashboard;
-
-
