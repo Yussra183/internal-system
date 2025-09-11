@@ -20,13 +20,14 @@ const SubmitResearch = ({
     }
   };
 
-  // 👉 Add New Proposal
+  // Add new proposal
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!formData.title || !formData.type || !formData.pdf) {
       alert("Please fill all fields and attach PDF!");
       return;
     }
+
     const newProposal = {
       title: formData.title,
       type: formData.type,
@@ -36,7 +37,6 @@ const SubmitResearch = ({
       startDate: new Date().toLocaleDateString(),
     };
 
-    // moja kwa moja inakwenda MyResearches
     setMyResearches([...myResearches, newProposal]);
 
     setFormData({ title: "", type: "", pdf: null });
@@ -45,7 +45,7 @@ const SubmitResearch = ({
     setTimeout(() => setConfirmation(""), 3000);
   };
 
-  // 👉 Submit existing (kutoka available → myResearches)
+  // Submit existing proposal from available
   const handleSubmitAvailable = (index) => {
     const proposal = availableProposals[index];
     const movedProposal = {
@@ -55,12 +55,10 @@ const SubmitResearch = ({
       lastModified: new Date().toLocaleString(),
     };
 
-    // toa kutoka available
     const updatedAvailable = [...availableProposals];
     updatedAvailable.splice(index, 1);
     setAvailableProposals(updatedAvailable);
 
-    // ongeza MyResearches
     setMyResearches([...myResearches, movedProposal]);
 
     setConfirmation(`"${proposal.title}" moved to My Researches.`);
@@ -68,12 +66,12 @@ const SubmitResearch = ({
   };
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div className="submit-research-container">
       <h2>Available Proposals</h2>
-      <table style={{ width: "100%", borderCollapse: "collapse" }}>
+      <table className="submit-research-table">
         <thead>
-          <tr style={{ background: "#1ca3de", color: "white" }}>
-            <th style={{ padding: "10px" }}>Title</th>
+          <tr>
+            <th>Title</th>
             <th>Type</th>
             <th>Status</th>
             <th>Last Modified</th>
@@ -82,13 +80,16 @@ const SubmitResearch = ({
         </thead>
         <tbody>
           {availableProposals.map((prop, index) => (
-            <tr key={index} style={{ borderBottom: "1px solid #ccc" }}>
-              <td style={{ padding: "10px" }}>{prop.title}</td>
+            <tr key={index}>
+              <td>{prop.title}</td>
               <td>{prop.type}</td>
               <td>{prop.status}</td>
               <td>{prop.lastModified || "-"}</td>
               <td>
-                <button onClick={() => handleSubmitAvailable(index)}>
+                <button
+                  className="submit-btn"
+                  onClick={() => handleSubmitAvailable(index)}
+                >
                   Submit
                 </button>
               </td>
@@ -97,29 +98,22 @@ const SubmitResearch = ({
         </tbody>
       </table>
 
-      <div style={{ marginTop: "20px" }}>
-        <button onClick={() => setShowForm(!showForm)}>
+      <div>
+        <button
+          className="add-proposal-btn"
+          onClick={() => setShowForm(!showForm)}
+        >
           {showForm ? "Cancel" : "Add New Proposal"}
         </button>
       </div>
 
-      {confirmation && (
-        <p style={{ color: "green", marginTop: "10px" }}>{confirmation}</p>
-      )}
+      {confirmation && <p className="confirmation-msg">{confirmation}</p>}
 
       {showForm && (
-        <form
-          onSubmit={handleSubmit}
-          style={{
-            marginTop: "20px",
-            border: "1px solid #ccc",
-            padding: "20px",
-            borderRadius: "10px",
-          }}
-        >
+        <form className="proposal-form" onSubmit={handleSubmit}>
           <h3>Submit New Proposal</h3>
-          <div style={{ marginBottom: "10px" }}>
-            <label>Title: </label>
+          <div>
+            <label>Title:</label>
             <input
               type="text"
               name="title"
@@ -127,21 +121,25 @@ const SubmitResearch = ({
               onChange={handleInputChange}
             />
           </div>
-          <div style={{ marginBottom: "10px" }}>
-            <label>Type: </label>
+          <div>
+            <label>Type:</label>
             <select
               name="type"
               value={formData.type}
               onChange={handleInputChange}
             >
               <option value="">Select type</option>
-              <option value="Thesis">Thesis</option>
-              <option value="Article">Article</option>
-              <option value="Project">Project</option>
+              <option value="Fisheries Research">Fisheries Research</option>
+              <option value="Marine Biology Research">
+                Marine Biology Research
+              </option>
+              <option value="Environmental & Ocean Systems Research">
+                Environmental & Ocean Systems Research
+              </option>
             </select>
           </div>
-          <div style={{ marginBottom: "10px" }}>
-            <label>Attach PDF: </label>
+          <div>
+            <label>Attach PDF:</label>
             <input
               type="file"
               name="pdf"
@@ -149,7 +147,9 @@ const SubmitResearch = ({
               onChange={handleInputChange}
             />
           </div>
-          <button type="submit">Submit Proposal</button>
+          <button type="submit" className="add-proposal-btn">
+            Submit Proposal
+          </button>
         </form>
       )}
     </div>
