@@ -10,15 +10,48 @@ export const AuthProvider = ({ children }) => {
     return savedUser ? JSON.parse(savedUser) : null;
   });
 
-  const [proposals, setProposals] = useState([]);
-  const [notifications, setNotifications] = useState([]);
+  const [proposals, setProposals] = useState([
+    // Dummy data
+    {
+      id: 1,
+      title: "Water Pollution Study",
+      type: "Thesis",
+      status: "Approved",
+      date: "2025-09-01",
+      description: "Study on water pollution in coastal areas",
+      finalReport: true,
+    },
+    {
+      id: 2,
+      title: "Mangrove Conservation",
+      type: "Article",
+      status: "Rejected",
+      date: "2025-09-05",
+      description: "Conservation of mangroves in Zanzibar",
+      finalReport: false,
+    },
+  ]);
+
+  const [notifications, setNotifications] = useState([
+    // Dummy notification
+    {
+      id: 1,
+      title: "Water Pollution Study",
+      type: "Thesis",
+      comment: "New proposal submitted",
+      time: "2025-09-01 10:00",
+      read: false,
+    },
+  ]);
 
   // --- DEMO LOGIN ---
   const login = ({ username, password }) => {
     const users = [
       { username: "researcher", password: "123", role: "researcher" },
       { username: "divisionhead", password: "123", role: "headOfDivision" },
-      { username: "headofdepartment", password: "123", role: "headOfDepartment" }, // new HOD user
+      { username: "headofdepartment", password: "123", role: "headOfDepartment" },
+      { username: "director", password: "123", role: "director" },
+      { username: "admin", password: "123", role: "admin" }, // new admin user
     ];
 
     const found = users.find(
@@ -30,7 +63,7 @@ export const AuthProvider = ({ children }) => {
     if (found) {
       setUser(found);
       localStorage.setItem("rms_user", JSON.stringify(found));
-      return { ok: true, user: found }; // ✅ match login page expectation
+      return { ok: true, user: found };
     }
 
     return { ok: false, message: "Username au password si sahihi" };
@@ -66,6 +99,7 @@ export const AuthProvider = ({ children }) => {
     );
   };
 
+  // Load from localStorage
   useEffect(() => {
     const savedProposals = localStorage.getItem("rms_proposals");
     if (savedProposals) setProposals(JSON.parse(savedProposals));
@@ -74,6 +108,7 @@ export const AuthProvider = ({ children }) => {
     if (savedNotifications) setNotifications(JSON.parse(savedNotifications));
   }, []);
 
+  // Save to localStorage
   useEffect(() => {
     localStorage.setItem("rms_proposals", JSON.stringify(proposals));
   }, [proposals]);

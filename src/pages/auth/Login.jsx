@@ -14,7 +14,6 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Trim and lowercase username for robust matching
     const res = login({
       username: username.trim().toLowerCase(),
       password: password,
@@ -24,7 +23,8 @@ const Login = () => {
       // Redirect based on role
       if (res.user.role === "researcher") navigate("/dashboard");
       else if (res.user.role === "headOfDivision") navigate("/head/dashboard");
-      else if (res.user.role === "headOfDepartment") navigate("/hod/dashboard"); // HOD
+      else if (res.user.role === "headOfDepartment") navigate("/hod/dashboard");
+      else if (res.user.role === "director") navigate("/director/dashboard"); // Director
     } else {
       setError(res.message);
     }
@@ -59,7 +59,8 @@ const Login = () => {
           Demo users: <br />
           researcher / 123 <br />
           divisionhead / 123 <br />
-          headofdepartment / 123 {/* added HOD */}
+          headofdepartment / 123 <br />
+          director / 123
         </p>
       </form>
     </div>
@@ -67,5 +68,3 @@ const Login = () => {
 };
 
 export default Login;
-
-
