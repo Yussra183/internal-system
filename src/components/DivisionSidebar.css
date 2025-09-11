@@ -43,7 +43,7 @@
 }
 
 .menu-item {
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 
 .menu-item a {
@@ -52,11 +52,13 @@
   font-size: 15px;
   display: flex;
   align-items: center;
-  padding: 8px 10px;
-  border-radius: 5px;
-  transition: background 0.3s;
+  gap: 10px; /* space between icon and text */
+  padding: 10px 12px;
+  border-radius: 6px;
+  transition: background 0.3s, color 0.3s;
 }
 
+/* Hover effect */
 .menu-item a:hover {
   background-color: rgba(255, 255, 255, 0.2);
 }
@@ -68,8 +70,10 @@
   font-weight: bold;
 }
 
-/* Icon next to text */
+/* Icon styling */
 .menu-item .icon {
-  margin-right: 10px;
-  font-size: 18px;
+  font-size: 20px; /* bigger icons for visibility */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

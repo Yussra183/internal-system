@@ -1,45 +1,49 @@
-
-/* Dashboard Layout Container */
+/* ===== Dashboard Layout Container ===== */
 .dashboard-layout {
   display: flex;
   min-height: 100vh;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f7fa;
 }
 
-/* Sidebar */
+/* ===== Sidebar ===== */
 .sidebar {
   width: 250px;
-  background-color: #1ca3de;
+  background: linear-gradient(180deg, #1ca3de, #148bbd);
   color: white;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  position: fixed; /* fixed sidebar */
+  position: fixed; /* Fixed sidebar */
   top: 0;
   left: 0;
   z-index: 1000;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Logo */
+/* ===== Logo Section ===== */
 .logo-container {
   text-align: center;
-  padding: 20px;
-  border-bottom: 1px solid #fff;
+  padding: 25px 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .logo-image {
-  width: 200px;
+  width: 160px;
   height: auto;
 }
 
 .logo-text {
-  margin-top: 10px;
-  font-size: 20px;
+  margin-top: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 
-/* Menu */
+/* ===== Menu ===== */
 .menu {
   list-style: none;
-  padding: 0;
+  padding: 15px 0;
   margin: 0;
   flex: 1;
   display: flex;
@@ -47,7 +51,7 @@
 }
 
 .menu-item {
-  margin: 10px 0; /* nafasi kati ya items */
+  margin: 5px 0;
 }
 
 .menu-link {
@@ -56,31 +60,37 @@
   padding: 12px 20px;
   text-decoration: none;
   color: white;
-  border-radius: 5px;
-  transition: background 0.2s, color 0.2s;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.3s ease;
 }
 
 .menu-link:hover {
-  background-color: #0d6efd;
-  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateX(5px);
 }
 
 .menu-link.active {
-  background-color: #0d6efd; /* highlight ya active */
-  font-weight: bold;
-  color: white;
+  background-color: #0d6efd;
+  font-weight: 600;
+  color: #fff;
+  box-shadow: inset 3px 0 0 #fff;
 }
 
-/* Icon spacing */
+/* ===== Icons ===== */
 .icon {
-  margin-right: 10px;
+  margin-right: 12px;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
 }
 
-/* Main Content */
+/* ===== Main Content ===== */
 .main-content {
   flex: 1;
-  margin-left: 250px; /* same as sidebar width */
-  padding: 20px;
+  margin-left: 250px; /* Same as sidebar width */
+  padding: 25px;
   overflow-y: auto;
-  background-color: #f5f5f5;
+  background-color: #f5f7fa;
 }
