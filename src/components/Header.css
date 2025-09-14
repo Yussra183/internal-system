@@ -2,28 +2,60 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 20px;
-  background-color: #ffffff; /* nyeupe */
-  color: #333333;
-  border-bottom: 1px solid #e0e0e0;
+  background: white;   /* sasa background ni white */
+  color: #1ca3de;      /* maandiko ya default */
+  padding: 10px 20px;
+  border-bottom: 1px solid #ddd; /* kuongeza mstari mdogo chini ya header */
 }
 
-.header-left .welcome-text {
-  font-size: 18px;
+.welcome-text {
+  font-size: 16px;
   font-weight: 500;
+  color: #1ca3de;   /* text ya welcome iwe na rangi ya theme */
 }
 
-.header-right .logout-btn {
-  background-color: #1ca3de; /* blue light */
-  border: none;
-  padding: 8px 15px;
-  color: white;
-  font-weight: bold;
-  border-radius: 5px;
+.header-right {
+  position: relative;
+}
+
+.profile-icon {
   cursor: pointer;
-  transition: background 0.3s;
+  border-radius: 50%;
+  padding: 5px;
+  transition: background 0.2s;
+  color: #1ca3de;   /* icon iwe na rangi ya theme */
+  font-size: 20px;
 }
 
-.header-right .logout-btn:hover {
-  background-color: #1590c7;
+.profile-icon:hover {
+  background: rgba(28, 163, 222, 0.1); /* blue nyepesi wakati hover */
 }
+
+.dropdown-menu {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background: white;
+  color: black;
+  border-radius: 6px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  min-width: 120px;
+  z-index: 100;
+}
+
+.dropdown-item {
+  width: 100%;
+  padding: 10px;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+}
+
+.dropdown-item:hover {
+  background: red;
+}
+
+

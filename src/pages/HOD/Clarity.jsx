@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./ManageProposals.css";
+import "./Clarity.css";
 
 const dummyProposals = [
   {
