@@ -19,3 +19,21 @@ const ProtectedRoute = ({ allowedRoles } = {}) => {
 };
 
 export default ProtectedRoute;
+
+
+
+// const registerUser = async (newUser) => {
+//   if (!token) return { ok: false, message: "Not authenticated" };
+
+//   const res = await fetch("http://127.0.0.1:8000/api/users/", {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//       "Authorization": `Bearer ${token.access}`
+//     },
+//     body: JSON.stringify(newUser),
+//   });
+
+//   const data = await res.json();
+//   return res.ok ? { ok: true, data } : { ok: false, message: data.error || "Failed" };
+// };

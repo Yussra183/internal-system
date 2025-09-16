@@ -1,17 +1,17 @@
 .assign-container {
   padding: 20px;
   max-width: 600px;
-  margin: 0 auto;
+  margin: 30px auto; /* imepangwa vizuri katikati ya screen */
   background: #f9f9f9;
   border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* kidogo shadow zaidi */
   font-family: Arial, sans-serif;
 }
 
 .assign-container h2 {
   text-align: center;
   color: #2c3e50;
-  margin-bottom: 15px;
+  margin-bottom: 20px; /* spacing zaidi */
 }
 
 .assign-form {
@@ -32,11 +32,12 @@
   border: 1px solid #ccc;
   border-radius: 8px;
   outline: none;
-  transition: border 0.3s;
+  transition: border 0.3s, box-shadow 0.3s;
 }
 
 .assign-form input:focus {
   border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0,123,255,0.3);
 }
 
 .assign-form button {
@@ -48,23 +49,48 @@
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background 0.3s, transform 0.2s;
 }
 
 .assign-form button:hover {
   background: #0056b3;
+  transform: translateY(-2px);
 }
 
 .assign-list {
   list-style: none;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* spacing sawa kwenye list */
 }
 
 .assign-list li {
-  padding: 10px;
-  margin-bottom: 10px;
+  padding: 12px 15px;
   background: #ecf0f1;
-  border-left: 4px solid #007bff;
-  border-radius: 6px;
+  border-left: 5px solid #007bff;
+  border-radius: 8px;
   font-size: 15px;
+  display: flex;
+  justify-content: space-between; /* researcher na project zinapangwa vizuri */
+  align-items: center;
+}
+
+.assign-list li strong {
+  color: #2c3e50;
+}
+
+.assign-list li button {
+  background: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background 0.3s;
+}
+
+.assign-list li button:hover {
+  background: #c0392b;
 }
