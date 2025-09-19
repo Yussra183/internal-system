@@ -74,40 +74,55 @@
 
 
 
-
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import "./Notifications.css"; // <-- add css
 
 const Notifications = () => {
-  const [notifications, setNotifications] = useState([]); // <-- initialize as empty array
+  const { notifications, markAsRead } = useContext(AuthContext);
 
-  useEffect(() => {
-    const fetchNotifications = async () => {
-      const token = localStorage.getItem("token");
-      const res = await fetch("http://127.0.0.1:8000/api/notifications/", {
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
-        },
-      });
-      const data = await res.json();
-      setNotifications(data); // should be an array
-    };
-    fetchNotifications();
-  }, []);
-
-  const unread = notifications.filter(n => !n.read); // now safe
+  const unreadNotifications = notifications.filter((n) => !n.read);
 
   return (
-    <div>
-      <h2>Unread Notifications ({unread.length})</h2>
-      {unread.map(n => (
-        <div key={n.id}>
-          <p>{n.title}</p>
-          <p>{n.comment}</p>
-        </div>
-      ))}
+    <div className="notifications-container">
+      <h2>Notifications</h2>
+      {unreadNotifications.length === 0 ? (
+        <p>No new notifications</p>
+      ) : (
+        <ul className="notifications-list">
+          {unreadNotifications.map((n) => (
+            <li key={n.id} className="notification-item">
+              <div className="notification-details">
+                <p><strong>Title:</strong> {n.title}</p>
+                <p><strong>Type:</strong> {n.type}</p>
+                <p><strong>Comment:</strong> {n.comment}</p>
+                <p><small>Time: {n.time}</small></p>
+              </div>
+              <button
+                onClick={() => markAsRead(n.id)}
+                className="notification-btn"
+              >
+                Accept
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      <hr />
+      <h3>All Notifications History</h3>
+      <ul className="history-list">
+        {notifications.map((n) => (
+          <li key={n.id} className="history-item">
+            <span className={n.read ? "" : "bold"}>
+              [{n.read ? "Read" : "New"}] {n.title} - {n.type} - {n.comment} ({n.time})
+            </span>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
 
 export default Notifications;
+

@@ -73,11 +73,29 @@ export default Login;
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // import React, { useState, useContext } from "react";
 // import { useNavigate } from "react-router-dom";
-// import { AuthContext } from "../../context/AuthContext";
 // import Logo from "../../assets/zafiri.png";
 // import "./login.css";
+// import { AuthContext } from "../../context/AuthContext";
 
 // const Login = () => {
 //   const [username, setUsername] = useState("");
@@ -88,31 +106,15 @@ export default Login;
 
 //   const handleSubmit = async (e) => {
 //     e.preventDefault();
-//     setError("");
-
-//     const res = await login(username.trim(), password);
+//     const res = await login({ username, password });
 
 //     if (res.ok) {
-//       // Redirect based on role
-//       switch (res.user.role) {
-//         case "researcher":
-//           navigate("/dashboard");
-//           break;
-//         case "headOfDivision":
-//           navigate("/head/dashboard");
-//           break;
-//         case "headOfDepartment":
-//           navigate("/hod/dashboard");
-//           break;
-//         case "director":
-//           navigate("/director/dashboard");
-//           break;
-//         case "admin":
-//           navigate("/admin/dashboard");
-//           break;
-//         default:
-//           navigate("/");
-//       }
+//       const role = res.user.role;
+//       if (role === "researcher") navigate("/dashboard");
+//       else if (role === "headOfDivision") navigate("/head/dashboard");
+//       else if (role === "headOfDepartment") navigate("/hod/dashboard");
+//       else if (role === "director") navigate("/director/dashboard");
+//       else if (role === "admin") navigate("/admin/dashboard");
 //     } else {
 //       setError(res.message);
 //     }
@@ -122,24 +124,22 @@ export default Login;
 //     <div className="login-page">
 //       <form className="login-form" onSubmit={handleSubmit}>
 //         <div className="login-header">
-//           <img src={Logo} alt="Zafiri Logo" className="logo" />
+//           <img src={Logo} alt="Logo" className="logo" />
 //           <p className="portal-text">Research Portal</p>
 //         </div>
 //         <h2>Login</h2>
-//         {error && <p style={{ color: "red", marginBottom: "10px" }}>{error}</p>}
+//         {error && <p style={{ color: "red" }}>{error}</p>}
 //         <input
 //           type="text"
 //           placeholder="Username"
 //           value={username}
 //           onChange={(e) => setUsername(e.target.value)}
-//           required
 //         />
 //         <input
 //           type="password"
 //           placeholder="Password"
 //           value={password}
 //           onChange={(e) => setPassword(e.target.value)}
-//           required
 //         />
 //         <button type="submit">Login</button>
 //       </form>
@@ -148,3 +148,6 @@ export default Login;
 // };
 
 // export default Login;
+
+
+
